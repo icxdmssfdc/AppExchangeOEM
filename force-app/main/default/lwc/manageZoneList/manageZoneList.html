@@ -1,0 +1,94 @@
+<template>
+	<lightning-card title="Zone List" icon-name="">
+		 <!--button for zone creation-->
+		<lightning-button slot="actions" label="Create New Zone" onclick={showCreateModal}></lightning-button>  
+		<!--popup for zone creation-->
+		 <!--for pop up-->
+		 <template if:true={CreateModal}>  
+			<div class="slds-modal slds-fade-in-open slds-backdrop">  
+				<div class="slds-modal__container">  
+                    <!------HEADER Section-->  
+                        <div class="slds-modal__header">New Zone </div>
+                    <!------Body Section-->  
+                    <div class="slds-modal__content slds-p-around_medium">  
+                        <lightning-record-edit-form  object-api-name="icxdmsv1__Zone__c" onsuccess={handleCreateSuccess} onsubmit ={handlecreateSubmit}>
+                            <lightning-input-field field-name="Name"></lightning-input-field>
+                            <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="Save" label="Save"></lightning-button>
+                        </lightning-record-edit-form>
+                    </div>  
+                    <!------Footer Section-->  
+                    <div class="slds-modal__footer">  
+                        <lightning-button icon-name="utility:close" label="close" variant="brand" onclick={closeCreateModal}>  
+                        </lightning-button>  
+                    </div>  
+				</div>  
+		    </div>			 
+	     </template>
+	   <!--end of new zone creation-->
+		<div class="slds-card__body_inner">
+			<!-- Start Zone list -->
+			<template if:true={VisibleZones}>
+				<lightning-layout multiple-rows="true" vertical-align="stretch" pull-to-boundary="small" height="5px">
+                    <div class="nav-item">
+					<template for:each={VisibleZones} for:item="zonelist">
+                        <div class="nav-car-items" key={zonelist.Id}>
+                            <lightning-layout-item key={zonelist.Id} flexibility="auto" size="3" class="slds-var-p-around_xx-small">
+                                <!-- Start Zone tile -->
+                                <div class="slds-text-align_right">
+									<lightning-card title={zonelist.Name} class="zone-tile">										
+											
+										   <lightning-button label="Edit" variant="brand" slot="actions"
+										    value={zonelist.Id} onclick={EditModalOpen}></lightning-button>
+										   <lightning-button label="Delete" variant="destructive" slot="actions"
+                                            value={zonelist.Id} onclick={deleteZonerecord}></lightning-button>
+
+										</lightning-card>
+						    	</div>
+                                <!-- End Zone tile -->
+                            </lightning-layout-item>
+                        </div>
+					</template>
+                </div>
+				</lightning-layout>
+                
+			</template>
+            <div slot="footer" class="slds-var-m-horizontal_medium slds-p-top_x-large">
+                <c-pagination records ={fetchedZones} onupdate={UpdateRecordhandler}></c-pagination>
+            </div>
+			<!-- End Zone list -->
+            
+			<!-- Data failed to load -->
+			<template if:true={error}>
+				<div class="slds-text-color_error">
+					{error}
+				</div>
+			</template>
+		</div>
+	<!--popup for editing record-->
+	<template if:true={EditModal}>  
+		<div class="slds-modal slds-fade-in-open slds-backdrop">  
+			<div class="slds-modal__container">  
+				<!------HEADER Section-->  
+				<div class="slds-modal__header"></div>  
+				<!------Body Section-->  
+				<div class="slds-modal__content slds-p-around_medium">  
+					<!--record view form to show zone name-->
+						<lightning-card>
+                        <template if:true={FormZone}>
+                            <lightning-record-edit-form record-id={FormZone.Id} object-api-name="icxdmsv1__Zone__c" onsuccess={handleSuccess} onsubmit ={handleSubmit}>
+                                <lightning-input-field field-name="Name"></lightning-input-field>
+                                <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Update"></lightning-button>
+                            </lightning-record-edit-form>
+						</template>
+						</lightning-card>
+				</div>  
+				<!------Footer Section-->  
+				<div class="slds-modal__footer">  
+					<lightning-button icon-name="utility:close" label="close" variant="brand" onclick={closeEditModal}></lightning-button>  
+				</div>  
+			</div>  
+		</div>  
+	</template>
+	<!--end of pop up for editing record-->
+	</lightning-card>
+</template>

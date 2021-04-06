@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Category__c</fullName>
+    <externalId>false</externalId>
+    <label>Product Category</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Value1</fullName>
+                <default>false</default>
+                <label>Value1</label>
+            </value>
+            <value>
+                <fullName>Dairy &amp; Bakery</fullName>
+                <default>false</default>
+                <label>Dairy &amp; Bakery</label>
+            </value>
+            <value>
+                <fullName>Snacks</fullName>
+                <default>false</default>
+                <label>Snacks</label>
+            </value>
+            <value>
+                <fullName>Beverages</fullName>
+                <default>false</default>
+                <label>Beverages</label>
+            </value>
+            <value>
+                <fullName>Personal Care</fullName>
+                <default>false</default>
+                <label>Personal Care</label>
+            </value>
+            <value>
+                <fullName>Home Care</fullName>
+                <default>false</default>
+                <label>Home Care</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

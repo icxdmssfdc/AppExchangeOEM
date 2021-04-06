@@ -1,0 +1,6 @@
+<design:component label="Model Flow">
+    <design:attribute name="title" label="Title" description="Enter Button Title"/>
+    <design:attribute name="label" label="Label" description="Enter Button Label"/>
+    <design:attribute name="flowName" label="Flow Name" description="Enter Flow Name"/>
+    <design:attribute name="float" label="Float" datasource="left,center,right" default="right"/>
+</design:component>

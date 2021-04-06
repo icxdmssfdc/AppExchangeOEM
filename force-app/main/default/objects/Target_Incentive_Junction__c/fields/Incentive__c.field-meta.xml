@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Incentive__c</fullName>
+    <externalId>false</externalId>
+    <label>Incentive</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Incentive picked should be of same type.</errorMessage>
+        <filterItems>
+            <field>Incentive__c.Type__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.Type__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Incentive__c</referenceTo>
+    <relationshipLabel>Target Incentive Junction</relationshipLabel>
+    <relationshipName>Target_Incentive_Junction</relationshipName>
+    <relationshipOrder>1</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

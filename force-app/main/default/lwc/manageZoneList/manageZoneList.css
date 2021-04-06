@@ -1,0 +1,14 @@
+.zone-tile {
+    border: 1px solid #d2955d;
+    border-radius: .25rem;
+    display: block;
+}
+.zone-silhouette {
+    height: 500px;
+}
+.nav-car-items{
+    height: 50px;
+}
+.nav-item{
+    width: 100%;
+}

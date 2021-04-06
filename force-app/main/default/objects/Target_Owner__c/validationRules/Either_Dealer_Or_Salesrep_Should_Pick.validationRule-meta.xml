@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Either_Dealer_Or_Salesrep_Should_Pick</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR( 
+(AND(ISBLANK(Dealer__c),ISBLANK(Salesrep__c))),
+AND( NOT(ISBLANK(Dealer__c)),NOT(ISBLANK(Salesrep__c)))
+)</errorConditionFormula>
+    <errorMessage>Either Salerep Or Dealer Should be picked.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,6 @@
+.butt{
+    color: rgb(18, 37, 18);
+    background-color:greenyellow;
+    float:right;
+    place-content: right;
+}

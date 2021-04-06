@@ -1,0 +1,22 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="DMSProductCatalogue" access="global">
+   <aura:attribute name="offers" type="Scheme__c[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-page-header">
+                <h1 class="slds-page-header__title slds-truncate" style="font-weight: bold;">Available Schemes</h1>
+            </div>
+    <div style="padding-top:10px" class="slds">
+        <div class="slds-card">
+            <div class="slds-page-header" style="border: none;">
+                <aura:iteration items="{!v.offers}" var="item">
+                    <div class="slds-card">
+                        <div class="slds-grid">
+                            <div class="item slds-size--1-of-1">
+                                <a style="font-size: medium;"><b><ui:outputText value="{!item.Name}"/></b></a>
+                            </div>
+                        </div>
+                    </div>
+                </aura:iteration>
+            </div>
+        </div>
+    </div>
+</aura:component>

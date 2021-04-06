@@ -1,0 +1,166 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes"
+                controller="DMSProductCatalogue" access="global">
+    <aura:handler event="c:ProductCatalogAddToCart" action="{!c.addToCart}"/>
+    <aura:attribute name="itemsInCart" type="Object[]"/>
+    <aura:attribute name="cartorder" type="Catalog_Order__c"/>
+    <aura:attribute name="cartitems" type="Catalog_Line_Item__c[]"/>
+    <aura:attribute name="total" type="Double" default="0"/>
+    <aura:attribute name="cartinitvalue" type="Double" default="0"/>
+    <aura:attribute name="accounts" type="String"/>
+    <aura:attribute name="selectedAccount" type="String"/>
+    <aura:attribute name="orderNumber" type="String"/>
+    <aura:attribute name="orderId" type="String"/>
+    <aura:attribute name="cbaseURL" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+	<div class="slds-page-header" style='color:black;'>
+                <h1 class="slds-page-header__title slds-truncate">Shopping Cart</h1>
+            </div>
+    <div class="slds">
+        <div class="slds-card">
+            <div class="slds-page-header" style="border: none; background: white; ">
+                <aura:if isTrue="{!v.cartitems.length == 0}">
+                    <p style="color: orange;
+    font-weight: bold;">Your cart is currently empty.</p>
+                </aura:if>
+                
+                <aura:iteration items="{!v.cartitems}" var="item">
+                    <div class="slds-card">
+                        <div class="slds-grid">
+                            <div class=" slds-size--1-of-4">
+                                <div class="item-media">
+                                     <img src="{!v.cbaseURL + item.icxdmsv1__Products__c.icxdmsv1__VF_Image__c }" />
+                                </div>                                
+                            </div>
+                        
+                            <div class="item slds-size--1-of-2">
+                                <ui:outputText value="{!item.icxdmsv1__Products__c.Name}" class="slds-shopping-name"/>
+                            </div>
+                       </div>
+                            <div class="slds-shopping-details">
+                                <div style="color:#0000FF"><p class="price"><ui:outputCurrency value="{!item.TotalPrice}"/></p></div>
+                            	<p>Qty: <ui:outputNumber value="{!item.Quantity}" class="qty"/></p>
+                                <ui:button class="{!item.Product2Id + ' removeButton'}" press="{!c.removeItem}">
+                                    <c:svgIcon svgPath="{!$sfdcSite.Prefix + $Resource.SLDS203 + '/assets/icons/utility-sprite/svg/symbols.svg#delete'}" class="icon"
+                                           size="medium" />
+                                </ui:button>
+							</div>
+                            <div class="item slds-size--1-of-4" style="align-items: center;">
+                                
+                            </div>
+                        
+                    </div>
+                </aura:iteration>
+                
+                <aura:if isTrue="{!v.cartorder.icxdmsv1__TOTAL_AMOUNT__c > 0}">
+                    <div style="display: flex; justify-content: flex-end;">
+                        <b>Order Amount: <span style="font-size: 17px;color:#0F5FFD"><ui:outputCurrency value="{!v.cartorder.icxdmsv1__TOTAL_AMOUNT__c}"/></span></b>
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!not(empty(v.cartorder.icxdmsv1__APPLIED_OFFER__c))}">
+                    <div style="display: flex; justify-content: flex-end;">
+                        Applied Offer: <span style="font-size: 12px;"><ui:outputText value="{!v.cartorder.icxdmsv1__APPLIED_OFFER__c}"/></span>
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.cartorder.icxdmsv1__DISCOUNT_AMOUNT__c > 0}">
+                    <div style="display: flex; justify-content: flex-end;">
+                        Discount Amount: <span style="font-size: 15px;"><ui:outputCurrency value="{!v.cartorder.icxdmsv1__DISCOUNT_AMOUNT__c}"/></span>
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.cartorder.icxdmsv1__GRAND_TOTAL_AMOUNT__c > 0}">
+                    <div style="display: flex; justify-content: flex-end;font-size:20px">
+                        <b>Total: <span style="font-size: 25px;color:#0F5FFD"><ui:outputCurrency value="{!v.cartorder.icxdmsv1__GRAND_TOTAL_AMOUNT__c}"/></span></b>
+                    </div>
+                    <aura:set attribute="else">
+                        Total:<b> <span style="font-size: 20px;"><ui:outputCurrency value="{!v.cartinitvalue}"/></span></b>
+                    </aura:set>
+                </aura:if>
+                <div class="checkout-button" style="display:flex; justify-content: flex-end;">
+                <ui:button class="{!v.cartitems.length > 0 ? 'slds-show':'slds-hide'}" label="Check out" press="{!c.showModal}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div role="dialog" tabindex="-1" id="modal" aura:id="modal" class="slds-modal">
+        <div class="slds-modal__container">
+            
+                <div class="slds-header-product" style="padding-top: 10px;">
+                    <ui:outputText class="slds-page-header__title slds-truncate" value="{!v.cartitems.length > 0 ? 'Check out':'Thank you!'}"/>
+                </div>
+          
+        <div class="slds-modal__header" style="border: none;">
+            <div class="{!v.cartitems.length > 0 ? 'slds-show slds-modal__content slds-p-around--medium':'slds-hide'}">
+                <ui:inputSelect aura:id="account" label="Account" change="{!c.onAccountChange}">
+                    <ui:inputSelectOption text="" label="--none--"/>
+                    <aura:iteration items="{!v.accounts}" var="account">
+                        <ui:inputSelectOption text="{!account.Id}" label="{!account.Name}"/>
+                    </aura:iteration>
+                </ui:inputSelect>
+                <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                    <thead>
+                        <tr class="slds-text-title--caps">
+                            <th scope="col">
+                                <div class="slds-truncate" title="Product">Product</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Unit Price">Unit Price</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Quantity">Quantity</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.cartitems}" var="item">
+                            <tr>
+                                <td scope="row" data-label="Product">
+                                    <div class="slds-truncate" title="Product">
+                                        <ui:outputText value="{!item.icxdmsv1__Products__c.Name}"/>
+                                    </div>
+                                </td>
+                                <td scope="row" data-label="Unit Price">
+                                    <div class="slds-truncate" title="Unit Price">
+                                        <ui:outputCurrency value="{!item.UnitPrice}"/>
+                                    </div>
+                                </td>
+                                <td scope="row" data-label="Quantity">
+                                    <div class="slds-truncate" title="Quantity">
+                                        <ui:outputText value="{!item.Quantity}"/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+                    
+                <div style="display: flex;">
+                    Order Amount: <span style="font-size: 15px;  color: #006eff;"><ui:outputCurrency value="{!v.cartorder.TotalAmount}"/></span>
+                </div>
+                <aura:if isTrue="{!not(empty(v.cartorder.icxdmsv1__APPLIED_OFFER__c))}">
+                    <div style="display: flex;">
+                        Applied Offer: <span style="font-size: 12px;"><ui:outputText value="{!v.cartorder.icxdmsv1__APPLIED_OFFER__c}"/></span>
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.cartorder.icxdmsv1__DISCOUNT_AMOUNT__c > 0}">
+                    <div style="display: flex;">
+                        Discount Amount: <span style="font-size: 15px;"><ui:outputCurrency value="{!v.cartorder.icxdmsv1__DISCOUNT_AMOUNT__c}"/></span>
+                    </div>
+                </aura:if>
+                <div style="display: flex; justify-content: flex-end;font-size:18px">
+                    Total: <span style="font-size: 20px;"><b><ui:outputCurrency value="{!v.cartorder.icxdmsv1__GRAND_TOTAL_AMOUNT__c}"/></b></span>
+                </div>
+            </div>
+            </div>
+            <div class="{!v.cartitems.length == 0 ? 'slds-show slds-modal__content slds-p-around--medium':'slds-hide'}">
+                <ui:outputText value="{! 'Your order, '+v.orderNumber + ', has been confirmed with your account. We thank you for shopping with us!' }"/>
+            </div>
+            <div class="slds-modal__footer" style="border: none; text-align:center;">
+                <lightning:button aura:id="button1" name="{!v.cartitems.length > 0 ? 'Cancel':'Close'}" label="{!v.cartitems.length > 0 ? 'Cancel':'Close'}" onclick="{!c.hideModal}" class="button1"/>
+                <ui:button class="{!v.cartitems.length > 0 ? 'slds-button--brand':'slds-hide'}" label="Confirm" press="{!c.createOrder}"/>
+            </div>
+        </div>
+    </div>
+    <div aura:id="backdrop" id="backdrop" class="slds-backdrop"></div>
+</aura:component>

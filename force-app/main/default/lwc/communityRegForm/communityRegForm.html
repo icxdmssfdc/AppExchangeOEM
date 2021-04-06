@@ -1,0 +1,85 @@
+<template>
+    <lightning-card style="background-color: grey;">
+    
+    
+        <div class="slds-p-bottom_large slds-p-center_large">
+        <lightning-record-edit-form object-api-name="icxdmsv1__iLead__c">
+           
+        <!---now upper div-->    
+        <br></br>        
+        <div style="background-color: #191970;height:80px;color:whitesmoke;padding-top:30px;text-align:center">
+        <h1><b>User Registration</b></h1>
+        </div>
+        <br></br>
+        <b><lightning-input-field field-name="icxdmsv1__Title__c">
+        </lightning-input-field></b>
+            
+            <b><lightning-input-field field-name="icxdmsv1__First_Name__c" label='Contact Person Name'>
+            </lightning-input-field></b>
+            <b><lightning-input-field field-name="icxdmsv1__Last_Name__c" label='Contact Person Name'>
+            </lightning-input-field></b>
+        
+        <b><lightning-input-field field-name="icxdmsv1__Company__c" label='Company Name'>
+            </lightning-input-field></b>
+        
+        <b><lightning-input-field field-name="icxdmsv1__Company_Established_Year__c">
+            </lightning-input-field></b>
+            
+        <b> <lightning-input-field field-name="icxdmsv1__Mobile__c">
+            </lightning-input-field></b>
+            
+        <b> <lightning-input-field field-name="icxdmsv1__Email__c">
+            </lightning-input-field></b>
+                
+        <b><lightning-input-field field-name="icxdmsv1__Contact_Person_Designation__c">
+            </lightning-input-field></b>
+        
+        <b> <lightning-input-field field-name="icxdmsv1__Your_Company_Current_Primary_Business__c">
+            </lightning-input-field></b>
+            
+        <b>	<lightning-input-field field-name="icxdmsv1__About_Warehouse__c">
+            </lightning-input-field></b>
+            
+        <b>	<lightning-input-field field-name="icxdmsv1__Other_Information__c">
+            </lightning-input-field></b>
+            
+            
+        <div style=" height:60px; text-align: center;padding-top:50px">
+        
+            <lightning-button class="slds-m-top_small" label="Cancel" onclick={handleReset}></lightning-button>
+        
+                <lightning-button  id="clickbutton" class="slds-m-left_x-small buttonclick" type="submit"
+                name="submit"
+                label="Save" variant="brand" onclick={showModal} > <!--handleSuccess}-->  
+                </lightning-button>
+        </div>
+    
+        <template if:true={openModal}>  
+            <div class="slds-modal slds-fade-in-open slds-backdrop">  
+              <div class="slds-modal__container">  
+                <!------HEADER Section-->  
+                <div class="slds-modal__header">  
+                  <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"  
+                    variant="bare-inverse" onclick={closeModal} class="slds-modal__close">  
+                  </lightning-button-icon>  
+                  <h2>Thank you</h2>  
+                </div>  
+                <!------Body Section-->  
+                <div class="slds-modal__content slds-p-around_medium">  
+                    <P>Your details has been submitted successfully! kindly check your mail for further updates.<br>  
+                    </P>  
+                </div>  
+                <!------Footer Section-->  
+                <div class="slds-modal__footer">  
+                  <lightning-button icon-name="utility:close" label="close" variant="brand" onclick={closeModal}>  
+                  </lightning-button>  
+                </div>  
+              </div>  
+            </div>  
+       </template>
+        
+        </lightning-record-edit-form>
+        </div>
+        </lightning-card>
+        
+        </template>

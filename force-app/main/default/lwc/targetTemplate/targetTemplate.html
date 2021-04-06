@@ -1,0 +1,72 @@
+<template>
+    <div class="slds-card demo-only demo-only--sizing slds-grid slds-wrap" style="background-color: aliceblue">
+        <div class="slds-size_2-of-3" style="padding-top: 18px;">
+          <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small" style="height: 400px; background-color: white">
+            <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+											 <lightning-card>
+					
+							<lightning-layout>
+								<lightning-layout-item>
+									<lightning-record-edit-form object-api-name="icxdmsv1__Target__c">
+										<lightning-messages></lightning-messages>
+									<b>Select the type of Target :</b>
+									<div> <b><lightning-input type="radio"  label='Revenue'>
+									</lightning-input></b></div>
+									<div> <b><lightning-input type="radio" label='Quantity'>
+									</lightning-input></b></div>
+									<br></br>        
+									<div >                
+								   </div>
+								
+									<b><lightning-input-field field-name="icxdmsv1__Type__c" label='Target Type'>
+									</lightning-input-field></b>
+										<b><lightning-input-field field-name="Name" label='Target Name'>
+										</lightning-input-field></b>
+										<b><lightning-input-field field-name="icxdmsv1__Revenue_Target__c" label='Revenue Target'>
+										</lightning-input-field></b>
+										<b><lightning-input-field field-name="icxdmsv1__Quantity_Target__c" label='Quantity Target'>
+										</lightning-input-field></b>
+										<b><lightning-input-field field-name="icxdmsv1__Target_Month__c" label='Target Month'>
+										</lightning-input-field></b>
+										<b><lightning-input-field field-name="icxdmsv1__Target_Year__c" label='Year'>
+										</lightning-input-field></b>           
+										<lightning-button  id="clickbutton" class="slds-m-left_x-small buttonclick" type="submit"
+												name="submit" label="Create Target" variant="brand" onclick={handleclick}>     <!--{handleSuccess} >-->	
+								</lightning-button>
+									</lightning-record-edit-form>
+						
+								  
+									
+								</lightning-layout-item>
+					
+							</lightning-layout>
+						</lightning-card>
+                        </div>
+            </div>
+                
+          </div>
+        </div>
+        <div class="slds-size_1-of-3" style="padding-top: 18px;">
+          <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small" style="height: 400px; background-color: white">
+            <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+											 <lightning-card>
+								<template if:true={vdata}>
+									<lightning-checkbox-group name="Checkbox Group"
+															label="Select User :"
+															options={comms}
+															value={value}
+															onchange={handleChange}>
+									</lightning-checkbox-group>
+									
+								</template>
+								</lightning-card>
+                        </div>
+            </div>
+                
+          </div>
+        </div>
+        
+      </div>
+</template>

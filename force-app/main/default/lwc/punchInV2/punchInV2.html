@@ -1,0 +1,68 @@
+<!--Currently Using for PunchIn / Out-->
+<template>
+     
+  <!--     <div class="slds-align_absolute-center" if:true={addtitle}><lightning-card><b style="font-size: 24px;background-color:rgb(18, 23, 85);color:white">Hi {CurrentUser} You are OnDuty now</b></lightning-card></div>
+      
+       <template if:true={LoginInfoTemp}>      
+        <lightning-card >
+          <div class="slds-align_absolute-center" if:true={addtitlepo}><b style="font-size: 24px;background-color:rgb(18, 23, 85);color:white">Hi {CurrentUser} You have been Punched out,please logout </b></div>
+              <div style="align-content:center" class="c-container">      
+                
+
+                <lightning-record-edit-form object-api-name="icxdmsv1__Attendance_Capture__c" record-id={attRecordId}>
+                    <div class="slds-align_absolute-center sds-c-card-sizing-border" style="font-size: 18px;background-color:rgb(18, 23, 85);color:white;height:69px"><h2> <b>Login Information</b></h2></div>
+                    <lightning-layout>
+                      <div style="align-items: center;">
+                    <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                      <div class="custom-box"><b style="font-size: 24px;"> {CurrentUser}</b></div><br></br>
+                      </lightning-layout-item>
+                    
+                <b><lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                  <div class="custom-box"><lightning-output-field field-name="icxdmsv1__Login_Date__c" label="User Login Date"></lightning-output-field></div>
+                  </lightning-layout-item>
+                  <lightning-layout-item flexibility="auto" padding="horizontal-medium">  
+                  <div class="custom-box"><lightning-input-field field-name="icxdmsv1__Logout_Date__c" value={poField} id="logoutField"></lightning-input-field></div>
+                  </lightning-layout-item>
+                  <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                    <div class="custom-box"><lightning-output-field field-name="icxdmsv1__Status__c"></lightning-output-field></div>
+                  </lightning-layout-item>
+                  <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                    <div class="custom-box"> <lightning-output-field field-name="icxdmsv1__Vehicle_Type__c"></lightning-output-field></div>
+                  </lightning-layout-item>
+                  <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                    <div class="custom-box"> <lightning-output-field field-name="icxdmsv1__Odometer_Reading__c"></lightning-output-field></div>
+                  </lightning-layout-item>
+                </b>
+                    </div>
+                  </lightning-layout> 
+              <div if:true={PunchOutButt}><lightning-button name="PunchOut" label="PunchOut" type="submit" variant="brand" onclick={punchOutMsg} class="my-brand"></lightning-button></div>
+           
+            </lightning-record-edit-form>
+              
+              </div>
+        </lightning-card>
+        
+      </template>
+      
+       <template if:true={PunchInTemp}>
+          <lightning-card title="PunchIn" icon-name="standard:record">
+                <lightning-card class="slds-align_absolute-center">
+                <div if:true={removetitle} style="background-color:rgb(18, 23, 85)">
+                <b style="font-size: 24px;background-color:rgb(18, 23, 85);color:white;text-align:center">Start your day with PunchIn</b>
+                </div>
+                </lightning-card>
+                  <div class="slds-m-around_medium">           
+                    <lightning-record-edit-form object-api-name="icxdmsv1__Attendance_Capture__c" record-id={recordId} onsuccess={handleSuccess}>
+                    Date:<lightning-formatted-date-time value={UserLogindate}></lightning-formatted-date-time>                   
+                        <lightning-input-field field-name="icxdmsv1__Status__c"></lightning-input-field>
+                        <div style="align-items: left;">    
+                            <lightning-input-field field-name="icxdmsv1__Odometer_Reading__c"></lightning-input-field>
+                            <lightning-input-field field-name="icxdmsv1__Vehicle_Type__c"></lightning-input-field>
+                        </div>
+                      <lightning-button label="PunchIn" variant="brand" type="submit">
+                      </lightning-button>
+                    </lightning-record-edit-form>             
+                  </div>          
+              </lightning-card>
+       </template>-->
+</template>

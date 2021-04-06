@@ -1,0 +1,50 @@
+<template>
+  <!--  <lightning-card>
+        <div class="slds-align_absolute-center" if:true={removetitle}><b style="font-size: 24px;color:rgb(10, 10, 129)">Start your day with PunchIn</b></div>
+        <div class="slds-align_absolute-center" if:true={addtitlepo}><b style="font-size: 24px;color:rgb(10, 10, 129)">Hi {CurrentUser} You have been Punched out,please logout </b></div>
+
+        <div class="slds-align_absolute-center" if:true={addtitle}><b style="font-size: 24px;color:rgb(10, 10, 129)">Hi {CurrentUser} You are OnDuty now</b>
+
+            <lightning-button name="PunchOut" label="PunchOut" type="submit" variant="success" onclick={punchoutmsg}></lightning-button>
+        
+        </div>
+        <template if:true={hbutton}><lightning-button id="butt" class="slds-align_absolute-center slds-float-center visibility" name=PunchIn label="Click-Me" variant="brand" onclick={openPunchIn}></lightning-button></template>
+        <lightning-card class="slds-align_absolute-center slds-float-center">   
+          
+            <template if:true={openPI}>
+                <div style="float:center;">
+              
+                        <lightning-button name="PunchIn" label="PunchIn" type="submit" variant="success" onclick={closetemp}></lightning-button>
+                    
+                </div>
+            </template>
+          
+            <template if:true={disabledCondition}>
+                <div style="float:center;">  {CurrentUser}<br></br>
+                  
+                    <b>Attendance Login Info:</b><br></br>Last Login Date: {UserLogindate}<br></br>
+                    <b>On Duty</b><br></br>
+                    
+                   
+                    <lightning-datatable title="User Login History" key-field="id" data={attends} columns={columns}></lightning-datatable>
+                 
+                   {atUser}
+                   {atStatus}
+   
+                </div>
+            </template>
+            <template if:true={atrecord}>
+            <p>  <lightning-formatted-date-time value={atDate}></lightning-formatted-date-time></p>
+                {atUser}
+                {atStatus}
+            </template>
+            <template if:true={values}>
+                <template for:each={values} for:item=cont>
+                     <h4 key={cont.atUser}>{cont.atUser}</h4>
+                     <h4 key={cont.atStatus}>{cont.atStatus}</h4>
+                     <h4 key={cont.atDate}>{cont.atDate}</h4>
+                </template>
+                </template>
+               </lightning-card>
+    </lightning-card>-->
+</template>

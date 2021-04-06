@@ -1,0 +1,30 @@
+<template>
+    <template if:true={punchInModal}>
+    <div>
+    <lightning-card >
+        <div class="slds-align_absolute-center"><b style="font-size: 24px;color:rgb(10, 10, 129)">Start your day with PunchIn</b></div>
+    </lightning-card>    
+    <lightning-button class="slds-align_absolute-center button" label="Punch In" variant="brand" onclick={createModal}></lightning-button>
+        <div class="slds-modal__container">
+            <template if:true={openModal}>
+                <lightning-record-edit-form object-api-name="icxdmsv1__Attendance_Capture__c">
+                    
+                    <lightning-input-field field-name="icxdmsv1__Status__c"></lightning-input-field>
+                    <lightning-button label="submit" type="submit" variant="brand" onclick={closeCreateModal}></lightning-button>
+                </lightning-record-edit-form> 
+            </template>
+        </div>
+    </div>
+    </template>
+        <lightning-button disabled class="slds-align_absolute-center button" label="Punch Out" variant="brand" onclick={punchOutModal}></lightning-button>
+        <div class="slds-modal__container">
+            <template if:true={openModalP}>
+                <lightning-record-edit-form object-api-name="icxdmsv1__Attendance_Capture__c">
+                    <lightning-input-field field-name="icxdmsv1__Dealer_Account__c"></lightning-input-field>
+                    <lightning-input-field field-name="icxdmsv1__Logout_Date__c"></lightning-input-field>
+                    <lightning-input-field field-name="icxdmsv1__Status__c"></lightning-input-field>
+                    <lightning-button label="submit" type="submit" variant="brand" onclick={closePunchOutModal}></lightning-button>
+                </lightning-record-edit-form> 
+            </template>
+        </div>
+</template>

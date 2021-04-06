@@ -1,0 +1,163 @@
+<template>
+    <lightning-card title="Beat List">
+       
+        
+    
+    <!--creation of Beats-->
+	 <!--button for Beat creation-->
+	 <lightning-button slot="actions" variant="brand" label="Create New Beat" onclick={showCreateModal}></lightning-button>  
+	 
+     <!-- Start Zone list -->
+     <template if:true={VisibleBeats}>
+         <lightning-layout multiple-rows="true" vertical-align="stretch" pull-to-boundary="small" height="5px">
+             <div class="nav-item">
+             <!--**section class start*-->	
+             <div class="sectionClass">
+             <template for:each={VisibleBeats} for:item="beatlist">
+                 <div class="nav-car-items" key={beatlist.Id}>
+                     <lightning-layout-item key={beatlist.Id} flexibility="auto" size="3" class="slds-var-p-around_xx-small">
+                         
+                             <lightning-accordion allow-multiple-sections-open>
+                                 
+                                 <div class="slds-grid slds-wrap"><div class="slds-text-align_left">
+                                     <lightning-accordion-section style="font-weight: bold;" label={beatlist.Name} class="c-card"><lightning-button class="slds-float-right butt" label="CheckIn" slot="actions" value={beatlist.Id} onclick={EditModalOpenCheckIn} variant="success"></lightning-button>
+                            <!-- <p>{beatlist.Name}</p>-->
+                                         <div style="float:right;padding-left: 500px;">
+											<lightning-button class="slds-float-right" label="Edit" variant="brand" slot="actions" value={beatlist.Id} onclick={EditModalOpen}></lightning-button>
+    										<lightning-button class="slds-float-right" label="Delete" variant="destructive" slot="actions" value={beatlist.Id} onclick={deleteBeatrecord}></lightning-button>
+										</div>
+                                        <!-- <p><b>Zone Name:</b>{beatlist.icxdmsv1__iZone__c}</p>-->
+                                         <lightning-record-edit-form record-id={beatlist.Id} object-api-name="icxdmsv1__Beat__c">
+                                            <div class="slds-grid slds-gutters slds-wrap" style="padding-left: 50px;">
+                                              <lightning-output-field class="field-padding" field-name="icxdmsv1__iZone__c" variant="label-inline">
+                                              </lightning-output-field>
+                                              <lightning-output-field class="field-padding" field-name="icxdmsv1__Beat__c.icxdmsv1__Zone__c.Name" variant="label-inline">
+                                              </lightning-output-field>
+                                              <lightning-output-field class="field-padding" field-name="icxdmsv1__Locality__c" variant="label-inline">
+                                              </lightning-output-field>
+                                              <lightning-output-field class="field-padding" field-name="icxdmsv1__Customer_Name__c" variant="label-inline">
+                                              </lightning-output-field>
+                                              
+                                            </div>
+                                          </lightning-record-edit-form>
+                                         <!--Name Instead of Id:<p>{icxdmsv1__Beat__c.Zone__r.Name}</p>
+                                         <p><b>Locality:</b>{beatlist.icxdmsv1__Locality__c}</p>
+                                         <p><b>Customer Name:</b>{beatlist.icxdmsv1__Customer_Name__c}</p>-->
+                                         
+                                      <!--   <div style="border: 1px solid #834f1f;
+                                         border-radius: .25rem;
+                                         display: block;float:right" class="slds-clearfix slds-float_right">
+                                         <lightning-button class="slds-float-right" label="Edit" variant="brand" slot="actions" value={beatlist.Id} onclick={EditModalOpen}></lightning-button>
+                                         <lightning-button class="slds-float-right" label="Delete" variant="destructive" slot="actions" value={beatlist.Id} onclick={deleteBeatrecord}></lightning-button>
+                                         </div>-->
+                                     </lightning-accordion-section>
+                                     
+                                 </div>
+                             </div>	
+                             </lightning-accordion>
+                         
+                     </lightning-layout-item>
+                 </div>
+             </template>
+         <!--**section class end*--></div>
+             </div>
+             </lightning-layout>
+     </template>
+             <div slot="footer" class="slds-var-m-horizontal_medium slds-p-top_x-large">
+                 <c-pagination records ={fetchedBeats} onupdate={UpdateRecordhandler}></c-pagination>
+             </div>			
+             <!-- End Zone list -->
+             <!--popup for editing record-->
+     <template if:true={EditModal}>  
+         <div class="slds-modal slds-fade-in-open slds-backdrop">  
+             <div class="slds-modal__container">  
+                 <!------HEADER Section-->  
+                 <div class="slds-modal__header"></div>  
+                 <!------Body Section-->  
+                 <div class="slds-modal__content slds-p-around_medium">  
+                     <!--record view form to show zone name-->
+                         <lightning-card>
+                         <template if:true={FormZone}>
+                             <lightning-record-edit-form record-id={FormZone.Id} object-api-name="icxdmsv1__Beat__c" onsuccess={handleSuccess} onsubmit ={handleSubmit}>
+                                 <lightning-input-field field-name="Name"></lightning-input-field>
+                         <!----> <lightning-input-field field-name="icxdmsv1__iZone__c"></lightning-input-field>
+                                 <lightning-input-field field-name="icxdmsv1__Locality__c"></lightning-input-field>
+                                 <lightning-input-field field-name="icxdmsv1__Customer_Name__c"></lightning-input-field>                      
+                                 <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Update"></lightning-button>
+                             </lightning-record-edit-form>
+                         </template>
+                         </lightning-card>
+                 </div>  
+                 <!------Footer Section-->  
+                 <div class="slds-modal__footer">  
+                     <lightning-button icon-name="utility:close" label="close" variant="brand" onclick={closeEditModal}></lightning-button>  
+                 </div>  
+             </div>  
+         </div>  
+     </template>
+     <!--end of pop up for editing record-->
+ <template if:true={CreateModal}>  
+             <div class="slds-modal slds-fade-in-open slds-backdrop">  
+                 <div class="slds-modal__container">  
+                     <!------HEADER Section-->  
+                         <div class="slds-modal__header">New Beat </div>
+                     <!------Body Section-->  
+                     <div class="slds-modal__content slds-p-around_medium">  
+                         <lightning-record-edit-form  object-api-name="icxdmsv1__Beat__c" onsuccess={handleCreateSuccess} onsubmit ={handlecreateSubmit}>
+                            <lightning-input-field field-name="Name"></lightning-input-field>
+                            <!----> <lightning-input-field field-name="icxdmsv1__iZone__c"></lightning-input-field>
+                                    <lightning-input-field field-name="icxdmsv1__Locality__c"></lightning-input-field>
+                                    <lightning-input-field field-name="icxdmsv1__Customer_Name__c"></lightning-input-field>
+                                    <!--<div class="slds-col">
+                                        <lightning-card>
+                                            <template if:true={vdata}>
+                                                <lightning-checkbox-group name="Checkbox Group"
+                                                       label="Select Account User :"
+                                                       options={comms}
+                                                       value={value}
+                                                       onchange={handleChange}>
+                                                </lightning-checkbox-group>
+                               
+                                            </template>
+                                        </lightning-card>
+                                      </div>-->
+                                    <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="Save" label="Save"></lightning-button>
+                         
+                        </lightning-record-edit-form>
+                     </div>  
+                     <!------Footer Section-->  
+                     <div class="slds-modal__footer">
+                         <lightning-button icon-name="utility:close" label="close" variant="brand" onclick={closeCreateModal}>  
+                         </lightning-button>  
+                     </div>  
+                 </div>  
+             </div>			 
+          </template>
+        </lightning-card>
+
+          <!--Modal for checkin-->
+          <template if:true={OModal}>
+            <div class="slds-modal slds-fade-in-open slds-backdrop">  
+                <div class="slds-modal__container">  
+                    <!------HEADER Section-->  
+                        <div class="slds-modal__header">Create CheckIn</div>
+                    <!------Body Section-->  
+                    <div class="slds-modal__content slds-p-around_medium">  
+                        <lightning-record-edit-form  object-api-name="icxdmsv1__CheckIn__c" onsuccess={handleCreateSuccessCheckIn} onsubmit ={handlecreateSubmit}>
+                           <lightning-input-field field-name="Name"></lightning-input-field>
+                                   <lightning-input-field field-name="icxdmsv1__Account__c"></lightning-input-field>
+                                   <lightning-input-field field-name="icxdmsv1__CheckIn_date__c"></lightning-input-field>
+                                   <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="Save" label="Save"></lightning-button>
+                        
+                        </lightning-record-edit-form>
+                    </div>  
+                    <!------Footer Section-->  
+                    <div class="slds-modal__footer">
+                        <lightning-button icon-name="utility:close" label="close" variant="brand" onclick={closeOModal}>  
+                        </lightning-button>  
+                    </div>  
+                </div>  
+            </div>			 
+          </template>
+          </template>
+</template>

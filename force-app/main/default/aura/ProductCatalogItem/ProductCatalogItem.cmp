@@ -1,0 +1,61 @@
+<aura:component >
+    
+    <aura:attribute name="product" type="Products__c" required="true"/>
+    <aura:attribute name="quantity" type="Integer" required="true" default="1"/>
+    <aura:attribute name="cbaseURL" type="String"/>
+    <div>
+        <figure class="slds-image slds-image--card" >
+            <a onclick="{!c.showModalLightning}" class="slds-image__crop slds-image__crop--1-by-1">
+                <img class="product-image" src="{!v.cbaseURL + v.product.icxdmsv1__VF_Image__c}" />
+            </a>
+            <figcaption class="slds-image__title slds-image__title--card">
+                <span class="slds-image__text slds-truncate" title="Image Title">
+                    <center>
+                        <h3 class="slds-truncate">
+                            <div style="color:#0F5FFD;text-align:left"> <a><ui:outputText value="{!v.product.Name}"/></a></div>
+                        </h3>
+                        <p class="slds-truncate">
+                          <div style="color:#0F5FFD;text-align:right"><b><ui:outputCurrency value="{!v.product.icxdmsv1__Default_Price__c}"/></b></div>
+                        </p>
+                    </center>
+                </span>
+            </figcaption>
+        </figure>
+        
+        <div role="dialog" tabindex="-1" aura:id="modal" class="slds-modal">
+            <div class="slds-modal__container">
+                 	<div>
+                        <p class="slds-header-product" style="background-color: #006eff !important;
+    color: white;height: 50px;font-size: 1.5rem;display: flex;padding-left: 50px;padding-top: 7px;">Product Details</p>
+                    </div>
+                <div class="slds-modal__header" style="border: none;">
+                   
+                    <div class="slds-product-details">
+                        <img class="product-image" src="{!v.cbaseURL + v.product.icxdmsv1__VF_Image__c}" />
+                        <div class="slds-description">
+                        <span style="font-weight: bold" >
+                            <ui:outputText value="{!v.product.Name}"/>
+                        </span>
+                        <span title="{!v.cbaseURL}">Quantity:</span>
+                    	<ui:inputNumber value="{!v.quantity}"/>
+                        <span style="font-weight: bold" >
+                            <ui:outputCurrency value="{!v.product.icxdmsv1__Default_Price__c}"/>
+                        </span>
+                        </div>
+                    </div>
+                    <div class="slds-modal__content" style="text-align: left;
+    					display: flex; flex-flow: column; margin-left: 33px; padding-left: 5px;">
+                        <div class="slds-desc">Product Description</div>
+                   		<ui:outputText value="{!v.product.icxdmsv1__Description__c}"/>
+                	</div>
+                </div>
+               
+                <div class="slds-modal__footer" style="border: none; text-align:center;">
+                    <ui:button label="Cancel" press="{!c.hideModalLightning}" class='button'/>
+                    <ui:button label="Add to Cart" press="{!c.addToCartLightning}" class='slds-addtocart-button'/>
+                </div>
+            </div>
+        </div>
+        <div aura:id="backdrop" class="slds-backdrop"></div>
+    </div>
+</aura:component>

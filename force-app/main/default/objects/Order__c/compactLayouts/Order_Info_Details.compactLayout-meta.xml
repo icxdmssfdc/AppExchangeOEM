@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Order_Info_Details</fullName>
+    <fields>Name</fields>
+    <fields>AccountId__c</fields>
+    <fields>ORDER_TYPE__c</fields>
+    <fields>IS_INVENTORY_ORDER__c</fields>
+    <fields>Order_Booked_Date__c</fields>
+    <fields>STATUS__c</fields>
+    <fields>ESTIMATED_DELIVERY_DATE__c</fields>
+    <fields>DELIVERED__c</fields>
+    <fields>DELIVERY_DATE__c</fields>
+    <label>Order Info Details</label>
+</CompactLayout>

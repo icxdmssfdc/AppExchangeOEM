@@ -1,0 +1,99 @@
+<template>
+  <div class="slds-grid slds-wrap container">
+    <div class="slds-col slds-size_1-of-1 slds-large-size_8-of-12 orderInfo-header">
+      <lightning-card class="slds-card-custom" title="Order Details">
+        <lightning-button-group slot="actions">
+          <lightning-button label="Refresh" onclick={handelRefresh}></lightning-button>
+          <lightning-button label="Edit" onclick={handelEdit}></lightning-button>
+          <lightning-button label="Save" onclick={handelSave}></lightning-button>
+        </lightning-button-group>
+        <template if:false={editRecord}>
+          <lightning-record-edit-form record-id={recordId} object-api-name="icxdmsv1__Order__c">
+            <div class="slds-grid slds-gutters slds-wrap">
+              <template for:each={orderFieldsArray} for:item="ordField">
+                <div key={ordField} class="slds-col slds-size_1-of-2">
+                  <lightning-output-field class="field-padding" field-name={ordField} variant="label-inline">
+                  </lightning-output-field>
+                </div>
+              </template>
+            </div>
+          </lightning-record-edit-form>
+        </template>
+        <template if:true={editRecord}>
+          <lightning-record-edit-form record-id={recordId} object-api-name="icxdmsv1__Order__c">
+            <div class="slds-grid slds-gutters slds-wrap">
+              <template for:each={orderFieldsArray} for:item="ordField">
+                <div key={ordField} class="slds-col slds-size_1-of-2">
+                  <lightning-input-field class="field-padding" field-name={ordField} variant="label-inline">
+                  </lightning-input-field>
+                </div>
+              </template>
+            </div>
+          </lightning-record-edit-form>
+        </template>
+      </lightning-card>
+    </div>
+    <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12 customerInfo-header">
+      <lightning-card class="slds-card-custom" title="Customer Information">
+        <lightning-button-group slot="actions">
+          <lightning-button label="Edit" onclick={handelEdit}></lightning-button>
+        </lightning-button-group>
+        <template if:false={editRecord}>
+          <lightning-record-edit-form record-id={accountId} object-api-name="Account">
+            <p>Account Id..: {accountId.Id}</p>
+            <div class="slds-grid slds-gutters slds-wrap">
+              <template for:each={accountFieldsArray} for:item="accField">
+                <div key={accField} class="slds-col slds-size_1-of-2">
+                  <lightning-output-field class="field-padding" field-name={accField} variant="label-inline">
+                  </lightning-output-field>
+                </div>
+              </template>
+            </div>
+          </lightning-record-edit-form>
+        </template>
+      </lightning-card>
+    </div>
+    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 lineItems-header">
+      <lightning-card class="slds-card-custom" title="Order Lines">
+        <lightning-button-group slot="actions">
+          <lightning-button label="New" onclick={handelLineItemNew}></lightning-button>
+        </lightning-button-group>
+        <div style="height: 300px;">
+          <lightning-datatable
+                  key-field="Id"
+                  data={orderLineItems}
+                  columns={columns}
+                  onsave={handleSave}
+                  draft-values={saveDraftValues}
+                  hide-checkbox-column 
+                  show-row-number-column
+                  onrowaction={handleRowAction}>
+          </lightning-datatable>
+        </div>
+      </lightning-card>
+    </div>
+    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 billingDetails-header">
+      <lightning-card class="slds-card-custom" title="Billing Details">
+        <lightning-button-group slot="actions">
+          <lightning-button label="Edit" onclick={handelEdit}></lightning-button>
+        </lightning-button-group>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_8-of-12 billingDetails-header">
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12 billingDetails-header">
+          <lightning-card class="slds-card-custom">
+            <lightning-record-edit-form record-id={recordId} object-api-name="icxdmsv1__Order__c">
+              <div class="slds-grid slds-gutters slds-wrap">
+                <template for:each={billingFieldsArray} for:item="ordField">
+                  <div key={ordField} class="slds-col slds-size_1-of-1">
+                    <lightning-output-field class="field-padding" field-name={ordField} variant="label-inline">
+                    </lightning-output-field>
+                  </div>
+                </template>
+              </div>
+            </lightning-record-edit-form>
+          </lightning-card>
+        </div>
+      </lightning-card>
+    </div>
+  </div>
+</template>

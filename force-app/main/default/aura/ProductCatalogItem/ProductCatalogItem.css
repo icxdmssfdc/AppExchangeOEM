@@ -1,0 +1,47 @@
+.THIS .slds-image--card{
+    width: 150px;
+    margin: 20px;
+}
+.THIS .product-image {
+    border-radius: 5px;
+    border: 1px solid #eee;
+    width: 137px;
+    height: 135px;
+    margin-bottom: 10px;
+    padding: 2px;
+    background: white;
+}
+
+.THIS .product-image:hover {
+    border: 1px solid #1589EE;
+}
+
+.THIS h1 {
+    font-size: 35px;
+}
+
+.THIS button {
+    background-color: white;
+    color:black;
+}
+.THIS .slds-addtocart-button{
+    background-color: #006eff;
+    color:white;
+}
+
+.THIS .slds-product-details{
+    display: flex;
+  	align-items: flex-start;
+    padding-left: 32px;
+}
+.THIS .slds-description{
+    display: flex;
+    flex-flow: column;
+    padding-left: 40px;
+    text-align: left;
+    padding-top: 35px;
+}
+.THIS .slds-desc{
+    font-weight: bold; 
+    font-size: 0.8rem;
+}

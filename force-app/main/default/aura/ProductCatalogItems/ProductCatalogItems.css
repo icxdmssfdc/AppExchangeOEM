@@ -1,0 +1,13 @@
+.THIS .catalog{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100% !important;
+}
+
+.THIS .slds-card {
+    overflow: hidden;
+    width: 516px;
+    margin: 0 auto;
+}

@@ -1,0 +1,52 @@
+<template>
+    <h2 class="slds-m-bottom--x-small" style="color:darkslateblue; font-weight:bold;">Zone List</h2>
+    <lightning-button slot="actions" label="Create New Zone" onclick={showModal}></lightning-button>  
+            <div class="slds-box">  
+              <lightning-datatable style="border: midnightblue;"
+              data={VisibleZones} columns={columns} key-field="Id">  
+              </lightning-datatable>  
+              <div slot="footer" class="slds-var-m-horizontal-medium">
+                <c-pagination records ={fetchedZones} onupdate={UpdateRecordhandler}></c-pagination>
+              </div>
+              
+            </div>
+            <!--for pop up-->
+            <template if:true={openModal}>  
+                <div class="slds-modal slds-fade-in-open slds-backdrop">  
+                  <div class="slds-modal__container">  
+                    <!------HEADER Section-->  
+                    <div class="slds-modal__header">  
+                      <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"  
+                        variant="bare-inverse" onclick={closeModal} class="slds-modal__close">  
+                      </lightning-button-icon>  
+                      <h2>Thank you</h2>  
+                    </div>  
+                    <!------Body Section-->  
+                    <div class="slds-modal__content slds-p-around_medium">  
+                        <P style="size:20px">I am popup window.<br> I am going to let you create Zones. 
+                        </P>
+                        <lightning-record-edit-form record-id={recordId}
+                        object-api-name="icxdmsv1__Zone__c">
+                        <lightning-input-field field-name="Name">
+                            </lightning-input-field>
+                            <lightning-button
+                                    class="slds-m-top_small"
+                                    variant="brand"
+                                    type="submit"
+                                    name="Save"
+                                    label="Save">
+                                </lightning-button>
+                            
+                            </lightning-record-edit-form>
+
+                    </div>  
+                    <!------Footer Section-->  
+                    <div class="slds-modal__footer">  
+                      <lightning-button icon-name="utility:close" label="close" variant="brand" onclick={closeModal}>  
+                      </lightning-button>  
+                    </div>  
+                  </div>  
+                </div>  
+           </template>
+        
+   </template>

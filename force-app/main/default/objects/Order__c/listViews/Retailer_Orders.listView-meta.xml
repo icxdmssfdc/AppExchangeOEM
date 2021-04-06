@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Retailer_Orders</fullName>
+    <columns>NAME</columns>
+    <columns>AccountId__c</columns>
+    <columns>Total_Quantity__c</columns>
+    <columns>TOTAL_AMOUNT__c</columns>
+    <columns>STATUS__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Type__c</field>
+        <operation>equals</operation>
+        <value>Retailer</value>
+    </filters>
+    <label>Retailer Orders</label>
+</ListView>

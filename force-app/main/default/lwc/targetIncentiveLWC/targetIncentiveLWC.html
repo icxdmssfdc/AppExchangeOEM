@@ -1,0 +1,54 @@
+<template>
+  <lightning-card title="Targets & Incentives" icon-name="custom:custom63">
+      <div class="slds-m-around_medium">
+        <div> <h1 class="slds-text-heading_medium"><b> These are the Targets you have to reach</b></h1>
+          <table>
+            <tr>  
+              <td> <b>Target Name </b></td>
+              <td> <b>Current Revenue Reached</b> </td>
+              <td> <b>Current Quantity Reached</b> </td>
+              <td> <b>Product</b> </td>
+              <td> <b>Target Revenue</b> </td>
+              <td> <b>Target Quantity</b> </td>
+            </tr>
+          
+
+          <template if:true={targetOwners.data}>
+            <template for:each={targetOwners.data} for:item="targetOwner">
+              <tr key={targetOwner.Id}>  
+                <td> {targetOwner.icxdmsv1__Target__r.Name} </td>
+                <td> {targetOwner.icxdmsv1__Current_Revenue_Reached__c} </td>
+                <td> {targetOwner.icxdmsv1__Current_Quantity_Reached__c} </td>
+                <td> {targetOwner.icxdmsv1__Target_Product__c} </td>
+                <td> {targetOwner.icxdmsv1__Target_Revenue__c} </td>
+                <td> {targetOwner.icxdmsv1__Target_Quantity__c} </td>  
+              </tr>    
+            </template>
+        </template>
+      </table>
+
+          </div>
+          <br>
+        <div> <h1 class="slds-text-heading_medium"><b> These are the Incentives you can avail</b></h1>
+            <table>
+              <tr>  
+                <td> <b>Incentive Name </b></td>
+                <td> <b>Target Name </b> </td>
+              </tr>
+            <template if:true={incentives.data}>              
+                <template for:each={incentives.data} for:item="inctv">                   
+                    <tr key={inctv.Id}>  
+                      <td> {inctv.icxdmsv1__Incentive__r.Name} </td>
+                      <td> {inctv.icxdmsv1__Target__r.Name} </td>  
+                      <td> 
+                        <lightning-button key={inctv.Id} variant="brand" label="Avail" value={inctv.Id} onclick={handleGetIncentive} class="slds-button"></lightning-button>
+                      </td>
+                    </tr>                                                        
+                  </template>                
+            </template>
+            </table>
+          </div>
+
+      </div>
+  </lightning-card>
+</template>
