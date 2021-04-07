@@ -3,6 +3,7 @@ public with sharing class calculateDayOfDate {
    // Public Date selectedDate{get;set;}
   //  public String dayValue{get;set;}
   //  public icxdmsv1__Beat_User__c beatUser {get;set;}
+  //from git
   public class Location{
     @AuraEnabled 
     public String icon{get;set;} 
