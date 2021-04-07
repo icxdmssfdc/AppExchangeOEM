@@ -175,7 +175,7 @@ wireGetBeatsInfo({error,data}){
            //return fields;
         }
     }*/
-    @track wiredBeatId;
+  /*  @track wiredBeatId;
     handleToggleSection(event){
         this.beatIdVal = event.target.name;
         GetBeatRelatedAccounts1({
@@ -188,7 +188,9 @@ wireGetBeatsInfo({error,data}){
         })
        // this.beatIdVal=event.detail.openSections;
         console.log('BeatId we got is'+this.beatIdVal);
-      /*  if(event.target.name===beatIdVal.Name){
+     
+    }*/
+     /*  if(event.target.name===beatIdVal.Name){
 
 
             console.log('handle Change'+event.target.value);
@@ -197,7 +199,6 @@ wireGetBeatsInfo({error,data}){
             this.beatIdVal = event.target.value;
 
         }*/
-    }
    
     @wire(getAccount,{relatedAccounts:'$fetchedBeatAccounts'})
     wiredAccountss({error,data}) {
