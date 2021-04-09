@@ -58,10 +58,15 @@ public class GeoLocation{
        getBeatAccounts(beatList);
         return beatList;    
 }
+<<<<<<< HEAD
 
 
 @AuraEnabled(cacheable=true)
 public static List<Account> getBeatAccounts(List<icxdmsv1__Beat_User__c> beatList){
+=======
+/*@AuraEnabled(cacheable=true)
+public static Map<id,Account> getBeatAccounts(List<icxdmsv1__Beat_User__c> beatList){
+>>>>>>> b92da985e7bc1b19c5e1077419d196b2fd427391
   Set<Id> beatIds = new Set<Id>();
   List<Account> relatedAccounts=new List<Account>();
  
@@ -103,6 +108,33 @@ public static List<Account> getBeatAccounts1(Id beatUserId){
     BillingState!=NULL AND icxdmsv1__Beat__c = :beatFetch.icxdmsv1__Beat__c];
     }
     getAccount(relatedAccounts);
+    return relatedAccounts;
+}*/
+
+@AuraEnabled(cacheable=true)
+public static List<Account> getBeatAccounts(List<icxdmsv1__Beat_User__c> beatList){
+  Set<Id> beatIds = new Set<Id>();
+ // List<Account> relatedAccounts=new List<Account>();
+ 
+  Map<icxdmsv1__Beat__c,Account> relatedAccounts=new Map<icxdmsv1__Beat__c,Account>();
+  //  for(Integer i:beatlist.size()){
+  //  for(Integer i:beatlist.size()){
+  for (icxdmsv1__Beat_User__c beatuser :beatList)
+  {
+    beatIds.add(beatuser.icxdmsv1__Beat__c);
+  }
+   // }
+   // ID beatId=beatList[0].icxdmsv1__Beat__c;
+    if(Account.sObjectType.getDescribe().isAccessible()){
+//
+    relatedAccounts=[SELECT id,Name,Type, Industry, BillingAddress,BillingStreet,
+    BillingCity, BillingCountry, BillingPostalCode,
+    BillingState,Phone,icxdmsv1__Beat__c FROM Account WHERE BillingStreet!=NULL AND
+    BillingCity!=NULL AND BillingCountry!=NULL AND  BillingPostalCode!=NULL AND
+    BillingState!=NULL AND icxdmsv1__Beat__c in :beatIds];
+    }
+    getAccount(relatedAccounts);
+    
     return relatedAccounts;
 }
 

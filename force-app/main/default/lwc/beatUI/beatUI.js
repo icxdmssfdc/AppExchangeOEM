@@ -176,7 +176,11 @@ wireGetBeatsInfo({error,data}){
            //return fields;
         }
     }*/
+<<<<<<< HEAD
    @track wiredBeatId;
+=======
+  /*  @track wiredBeatId;
+>>>>>>> b92da985e7bc1b19c5e1077419d196b2fd427391
     handleToggleSection(event){
         this.beatIdVal=event.detail.openSections;//event.VisibleBeats.id;//event.getparam(opensections);
         console.log('beat id shown here is'+this.beatIdVal);//event.detail.openSections;
@@ -192,6 +196,7 @@ wireGetBeatsInfo({error,data}){
        // this.beatIdVal=event.detail.openSections;
         console.log('BeatId we got is'+this.beatIdVal);
      
+<<<<<<< HEAD
     }     
         @wire(GetBeatRelatedAccounts,{beatList:'$fetchedBeats'})
 wireGetBeatsInfo({error,data}){
@@ -206,6 +211,20 @@ wireGetBeatsInfo({error,data}){
     
 }
     @wire(getAccount,{relatedAccounts:'$AccountsOnMap'})  //'$fetchedBeatAccounts'})
+=======
+    }*/
+     /*  if(event.target.name===beatIdVal.Name){
+
+
+            console.log('handle Change'+event.target.value);
+
+            this.beatIdVal=event.detail.openSections;
+            this.beatIdVal = event.target.value;
+
+        }*/
+   
+    @wire(getAccount,{relatedAccounts:'$fetchedBeatAccounts'})
+>>>>>>> b92da985e7bc1b19c5e1077419d196b2fd427391
     wiredAccountss({error,data}) {
         if (data) {
             this.accounts = data;
