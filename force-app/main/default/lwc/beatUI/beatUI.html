@@ -35,87 +35,55 @@ beat Id value is{beatAcc}-->
         <lightning-layout multiple-rows="true" vertical-align="stretch" pull-to-boundary="small" height="5px">
             <div class="nav-item">
             <!--**section class start*-->
-            <div class="sectionClass">
-            <template for:each={VisibleBeats} for:item="beatlist">
-                <div class="nav-car-items" key={beatlist.Id}>
-                  <!-- <lightning-layout-item key={beatlist.Id} name={beatlist.icxdmsv1__Beat__r.Name} flexibility="auto" size="3" class="slds-var-p-around_xx-small">                        --> 
-                            <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleToggleSection}>    <!--allow-multiple-sections-open-->                           
-                                <div class="slds-grid slds-wrap"><div class="slds-text-align_left">
-                                    <lightning-accordion-section style="font-weight: bold;" label={beatlist.icxdmsv1__Beat__r.Name} name={beatlist.icxdmsv1__Beat__c} class="c-card">                                      
+            <div class="sectionClass">           
+               <!-- <div class="nav-car-items" key={beatlist.Id}>
+                   <lightning-layout-item key={beatlist.Id} name={beatlist.icxdmsv1__Beat__r.Name} flexibility="auto" size="3" class="slds-var-p-around_xx-small">                        --> 
+                    <template if:true={VisibleBeats}>
+                    <lightning-accordion onsectiontoggle={handleToggleSection}>
+                                <template for:each={VisibleBeats} for:item="beatlist">    <!--allow-multiple-sections-open-->                           
+                             <!--   <div class="slds-grid slds-wrap"><div class="slds-text-align_left">-->
+                                    <lightning-accordion-section key={beatlist.id} style="font-weight: bold;" label={beatlist.icxdmsv1__Beat__r.Name} name={beatlist.icxdmsv1__Beat__c} class="c-card">                                      
                                         <!--beatuser values-->
                                         <lightning-record-edit-form record-id={beatlist.Id} object-api-name="icxdmsv1__Beat_User__c">
                                             <div class="slds-grid slds-gutters slds-wrap" style="padding-left: 50px;">
                                                 <lightning-output-field class="field-padding" field-name="icxdmsv1__Beat__c" variant='label-hidden'><!--variant="label-inline"-->
                                                 </lightning-output-field>
                                                <!--class="nav-car-items" <lightning-output-field class="field-padding" field-name="icxdmsv1__BeatAccountName__c"></lightning-output-field>-->
+                                              <!-- <template if:true={beatlist.id}>-->
                                                <template for:each={fetchedBeatAccounts} for:item="beatAccountlist">
                                                     <div key={beatAccountlist.Id} style="padding-left: 20px">                                                             
                                                         <lightning-record-edit-form record-id={beatAccountlist.Id} object-api-name="Account">                                                  
                                                                 <ul class="slds-has-dividers_around-space">
                                                                     <li class="slds-item">
                                                                       <article class="slds-tile slds-tile_board">
-                                                                        <h3 class="slds-tile__title slds-truncate" title="Beat Account Name">
-                                                                         <a href="#"> 
-                                                                               <lightning-output-field field-name="Name" variant='label-hidden'></lightning-output-field>   </a> <br></br> 
-                                                                            <template if:true={checkinbutton}><lightning-button label="CheckIn" variant="brand" onclick={handleSuccessAccount} value={beatAccountlist.Id} type="submit"></lightning-button></template>
-                                                                            <template if:true={checkoutbutton}><lightning-button label="CheckOut" variant="brand" value={beatAccountlist.Id} type="submit"></lightning-button></template> 
+                                                                        <h3 class="slds-tile__title slds-truncate" title="Beat Account Name">                                                                        
+                                                        <lightning-output-field field-name="Name" variant='label-hidden'></lightning-output-field>   <br></br> 
+                                             <!--<template if:true={checkinbutton}>--><lightning-button label="CheckIn" disabled={CIButtontrue} variant="brand" 
+                                                        onclick={handleSuccessAccountCI} name={beatAccountlist.Id} value={beatAccountlist.Id} id={beatAccountlist.Id} type="submit"></lightning-button>
+                                            <!--<template if:true={checkoutbutton}>--><lightning-button label="CheckOut" disabled={COButtontrue} variant="brand" 
+                                                        value={beatAccountlist.Id} onclick={handleSuccessAccountCO} name={beatAccountlist.Id} type="submit"></lightning-button><!--</template> -->
                                                                         </h3>                       
                                                                      </article>
                                                                     </li>
-                                                                 </ul>
-                                                                 <template for:each={fetchedBeatAccounts} for:item="mapKey">
-                                                                    <tr key={mapKey.key}>
-                                                                        <th scope="col">
-                                                                            <div title={mapKey.key}>{mapKey.key}</div>
-                                                                        </th>
-                                                                        <th scope="col">
-                                                                            <div title={mapKey.value}>{mapKey.value}</div>
-                                                                        </th>
-                                                                    </tr>
-                                                                </template>
+                                                                 </ul>                                                                 
                                                         </lightning-record-edit-form>                                                         
                                                     </div>
-                                                </template>                                            
+                                                </template>     
+                                               <!-- </template>                                       -->
                                             </div>
-                                        </lightning-record-edit-form>
-                                        <!--CheckIn mOdal-->
-                                        <template if:true={OModal}>
-                                            <div class="slds-modal slds-fade-in-open slds-backdrop">  
-                                                <div class="slds-modal__container">  
-                                                    <!------HEADER Section-->  
-                                                        <div class="slds-modal__header">Create CheckIn</div>
-                                                    <!------Body Section-->  
-                                                    <div class="slds-modal__content slds-p-around_medium">                                                              
-                                                        <lightning-record-edit-form  object-api-name="icxdmsv1__CheckIn__c" onsuccess={handleCreateSuccessCheckIn} onsubmit ={handlecreateSubmit}>
-                                                                   <lightning-input-field field-name="icxdmsv1__Account__c"></lightning-input-field>
-                                                                   <lightning-input-field field-name="icxdmsv1__CheckIn_date__c"></lightning-input-field>
-                                                                   <lightning-input-field field-name="icxdmsv1__User__c"></lightning-input-field>
-                                                                   <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="Save" label="Submit"></lightning-button>
-                                                        
-                                                        </lightning-record-edit-form>
-                                                      
-                                                    </div>  
-                                                    <!------Footer Section-->  
-                                                    <div class="slds-modal__footer">
-                                                        <lightning-button icon-name="utility:close" label="close" variant="brand" onclick={closeOModal}>  
-                                                        </lightning-button>  
-                                                    </div>  
-                                                </div>  
-                                            </div>			 
-                                          </template>
-                                         
-                                    </lightning-accordion-section>                                   
-                                </div>
-                            </div>	
-                            </lightning-accordion>                        
-                   <!-- </lightning-layout-item>-->
-                </div>
-            </template>
+                                        </lightning-record-edit-form>                                                                                
+                                    </lightning-accordion-section> 
+                                </template>                                                                                          
+                            </lightning-accordion>       
+                        </template>                 
+                   <!-- </lightning-layout-item>
+                </div>-->
+     
         <!--**section class end*--></div>
             </div>
             </lightning-layout>
     </template>
-    <template if:false={fetchedBeats}>
+    <template if:false={VisibleBeats}>
         <div style="text-align: center;">
            <h2> <b>There are no Beats associated to you currently</b></h2>
         </div>
