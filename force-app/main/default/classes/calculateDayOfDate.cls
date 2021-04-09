@@ -59,7 +59,6 @@ public class GeoLocation{
         return beatList;    
 }
 
-
 @AuraEnabled(cacheable=true)
 public static List<Account> getBeatAccounts(List<icxdmsv1__Beat_User__c> beatList){
   Set<Id> beatIds = new Set<Id>();
