@@ -58,15 +58,8 @@ public class GeoLocation{
        getBeatAccounts(beatList);
         return beatList;    
 }
-<<<<<<< HEAD
-
-
-@AuraEnabled(cacheable=true)
-public static List<Account> getBeatAccounts(List<icxdmsv1__Beat_User__c> beatList){
-=======
 /*@AuraEnabled(cacheable=true)
 public static Map<id,Account> getBeatAccounts(List<icxdmsv1__Beat_User__c> beatList){
->>>>>>> b92da985e7bc1b19c5e1077419d196b2fd427391
   Set<Id> beatIds = new Set<Id>();
   List<Account> relatedAccounts=new List<Account>();
  
