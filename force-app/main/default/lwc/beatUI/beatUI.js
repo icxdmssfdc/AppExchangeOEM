@@ -9,8 +9,8 @@ import DisplayBeats from '@salesforce/apex/calculateDayOfDate.displayBeats';
 import GetBeatRelatedAccounts from '@salesforce/apex/calculateDayOfDate.getBeatAccounts';
 import getAccount from '@salesforce/apex/calculateDayOfDate.getAccount';
 import CheckInCreation from '@salesforce/apex/calculateDayOfDate.checkInRecordCreation';
-
 import GetBeatRelatedAccounts1 from '@salesforce/apex/calculateDayOfDate.getBeatAccounts1';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 const weekday=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 var d = new Date();
 //let n;
@@ -24,7 +24,8 @@ beatIdVal;
 @track BeatDayVar=BeatDay;
 @track fetchedBeats = [];
 @track VisibleBeats;
-@track fetchedBeatAccounts;
+@track fetchedBeatAccounts = [];
+@track AccountsOnMap = [];
 @track day;
 @track beatDayRecord;
 @track CreateModal=false;
@@ -150,7 +151,7 @@ connectedCallback(){
 //}
 
 //uncomment for previous code
-@wire(GetBeatRelatedAccounts,{beatList:'$fetchedBeats'})
+/*@wire(GetBeatRelatedAccounts,{beatList:'$fetchedBeats'})
 wireGetBeatsInfo({error,data}){
     if(data){
         
@@ -161,7 +162,7 @@ wireGetBeatsInfo({error,data}){
        console.log(error);
     }
     
-}
+}*/
 /*@track fields;
 @wire(GetBeatRelatedAccounts,{beatList:'$fetchedBeats'})
     wiredResult(result) { 
@@ -175,31 +176,36 @@ wireGetBeatsInfo({error,data}){
            //return fields;
         }
     }*/
-    @track wiredBeatId;
+   @track wiredBeatId;
     handleToggleSection(event){
-        this.beatIdVal = event.target.name;
+        this.beatIdVal=event.detail.openSections;//event.VisibleBeats.id;//event.getparam(opensections);
+        console.log('beat id shown here is'+this.beatIdVal);//event.detail.openSections;
+       // this.beatIdVal = event.target.name;
         GetBeatRelatedAccounts1({
             beatUserId:this.beatIdVal
         }).then(result =>{
-            this.wiredBeatId = result;
+            this.fetchedBeatAccounts = result;
         })
         .catch(error =>{
             this.errorMsg = error;
         })
        // this.beatIdVal=event.detail.openSections;
         console.log('BeatId we got is'+this.beatIdVal);
-      /*  if(event.target.name===beatIdVal.Name){
-
-
-            console.log('handle Change'+event.target.value);
-
-            this.beatIdVal=event.detail.openSections;
-            this.beatIdVal = event.target.value;
-
-        }*/
+     
+    }     
+        @wire(GetBeatRelatedAccounts,{beatList:'$fetchedBeats'})
+wireGetBeatsInfo({error,data}){
+    if(data){
+        
+        this.AccountsOnMap=data;
+        }
+    
+    else if(error){
+       console.log(error);
     }
-   
-    @wire(getAccount,{relatedAccounts:'$fetchedBeatAccounts'})
+    
+}
+    @wire(getAccount,{relatedAccounts:'$AccountsOnMap'})  //'$fetchedBeatAccounts'})
     wiredAccountss({error,data}) {
         if (data) {
             this.accounts = data;
@@ -212,9 +218,18 @@ wireGetBeatsInfo({error,data}){
     }
     @api accountEventId;
     @track accId;
-    handleSuccessAccount(event) {
-        //this.accountEventId = event.detail.id;
+    checkinbuttonId;
+    @track CIButtontrue=false;
+    @track COButtontrue=true;
+    handleSuccessAccountCI(event) {
+        //this.accountEventId = event.detail.id;       
+        //let currentButtonId = event.
         this.accountEventId = event.target.value;
+        this.checkinbuttonId=event.target.name;
+        this.buttId=event.target.id;
+        if(this.checkinbuttonId==this.accountEventId ){//&& this.accountEventId==this.buttId){
+            
+            console.log('checkin button name'+this.checkinbuttonname);        
         CheckInCreation({
             accountId:this.accountEventId
         }).then(result =>{
@@ -222,32 +237,40 @@ wireGetBeatsInfo({error,data}){
         })
         .catch(error =>{
             this.errorMsg = error;
-        })
-        this.checkinbutton=false;
-        this.checkoutbutton=true;
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: 'Success',
-                message: 'CheckedIn Successful',
-                variant: 'success'
-            })
-        );
-       // this.disabled=true;
-
-        /*CheckInCreation().then(result =>{
-            this.wiredEvents = result;
-        })
-        .catch(error =>{
-            this.errorMsg = error;
-        })*/
+        })        
+        this.showSuccessToast();
+        this.CIButtontrue=true;
+        this.CIButtontrue=false;
+        //this.checkinbutton=false;
+       // this.checkoutbutton=true;        
+        }
+    }          
+    showSuccessToast() {
+        const evt = new ShowToastEvent({
+            title: 'Successfully CheckedIn',
+            message: 'CheckIn Operation successful',
+            variant: 'success',
+            mode: 'dismissable'
+        });
+        this.dispatchEvent(evt);
+        //this.disabled=true;
+    }
+    handleSuccessAccountCO(event){
+        const evt = new ShowToastEvent({
+            title: 'Successfully CheckedOut',
+            message: 'CheckIn Operation successful',
+            variant: 'success',
+            mode: 'dismissable'
+        });
+        this.dispatchEvent(evt);
+        this.CIButtontrue=false;
     }
     @wire(CheckInCreation,{accountId:'$accountEventId'})//'$accounts'})
     wireGetBeatsInfopp({error,data}){
         if(data){        
             this.accId=this.accountEventId;
             this.wiredEvents=data;
-            }
-        
+        }       
         else if(error){
            console.log(error);
         }

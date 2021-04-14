@@ -3,6 +3,7 @@ public with sharing class calculateDayOfDate {
    // Public Date selectedDate{get;set;}
   //  public String dayValue{get;set;}
   //  public icxdmsv1__Beat_User__c beatUser {get;set;}
+  //from git
   public class Location{
     @AuraEnabled 
     public String icon{get;set;} 
@@ -57,39 +58,51 @@ public class GeoLocation{
        getBeatAccounts(beatList);
         return beatList;    
 }
+
+
 @AuraEnabled(cacheable=true)
-public static Map<id,Account> getBeatAccounts(List<icxdmsv1__Beat_User__c> beatList){
+public static List<Account> getBeatAccounts(List<icxdmsv1__Beat_User__c> beatList){
   Set<Id> beatIds = new Set<Id>();
-  List<Account> relatedAccounts1=new List<Account>();
-  Map<id,Account> relatedAccounts=new Map<id,Account>();
-  //  for(Integer i:beatlist.size()){
-    for (icxdmsv1__Beat_User__c beatuser1 :beatList)
-  {
-    beatIds.add(beatuser1.icxdmsv1__Beat__c);
-      system.debug('BeatIds are shown'+beatIds);
-  }
-    
-List<Account> BeatAccounts=[SELECT Name,icxdmsv1__Beat__c FROM Account WHERE icxdmsv1__Beat__c in :beatIds];
-
-  for (Account beatAccount :BeatAccounts)
-  {
-    relatedAccounts.put(beatAccount.icxdmsv1__Beat__c,beatAccount);
-  }
-  
+  List<Account> relatedAccounts=new List<Account>();
  
-
+  //Map<icxdmsv1__Beat__c,Account> relatedAccounts=new Map<icxdmsv1__Beat__c,Account>();
+  //  for(Integer i:beatlist.size()){
+  //  for(Integer i:beatlist.size()){
+  for (icxdmsv1__Beat_User__c beatuser :beatList)
+  {
+    beatIds.add(beatuser.icxdmsv1__Beat__c);
+  }
    // }
    // ID beatId=beatList[0].icxdmsv1__Beat__c;
     if(Account.sObjectType.getDescribe().isAccessible()){
 //
-    relatedAccounts1=[SELECT id,Name,Type, Industry, BillingAddress,BillingStreet,
+    relatedAccounts=[SELECT id,Name,Type, Industry, BillingAddress,BillingStreet,
     BillingCity, BillingCountry, BillingPostalCode,
     BillingState,Phone,icxdmsv1__Beat__c FROM Account WHERE BillingStreet!=NULL AND
     BillingCity!=NULL AND BillingCountry!=NULL AND  BillingPostalCode!=NULL AND
     BillingState!=NULL AND icxdmsv1__Beat__c in :beatIds];
     }
-    getAccount(relatedAccounts1);
-    system.debug('Accounts are'+relatedAccounts);
+    getAccount(relatedAccounts);
+    
+    return relatedAccounts;
+}
+
+@AuraEnabled(cacheable=true)
+public static List<Account> getBeatAccounts1(Id beatUserId){
+  
+ Set<Id> beatIds = new Set<Id>();
+ icxdmsv1__Beat_User__c beatFetch=[SELECT icxdmsv1__Beat__c FROM icxdmsv1__Beat_User__c WHERE icxdmsv1__Beat__c=:beatUserId];
+  List<Account> relatedAccounts=new List<Account>();
+    //ID beatId=beatList[0].icxdmsv1__Beat__c;
+    if(Account.sObjectType.getDescribe().isAccessible()){
+
+    relatedAccounts=[SELECT id,Name,Type, Industry, BillingAddress,BillingStreet,
+    BillingCity, BillingCountry, BillingPostalCode,
+    BillingState,Phone,icxdmsv1__Beat__c FROM Account WHERE BillingStreet!=NULL AND
+    BillingCity!=NULL AND BillingCountry!=NULL AND  BillingPostalCode!=NULL AND
+    BillingState!=NULL AND icxdmsv1__Beat__c = :beatFetch.icxdmsv1__Beat__c];
+    }
+    getAccount(relatedAccounts);
     return relatedAccounts;
 }
 
@@ -144,17 +157,41 @@ List<Account> BeatAccounts=[SELECT Name,icxdmsv1__Beat__c FROM Account WHERE icx
       }
     return eventRecord;  
   }
-@AuraEnabled(cacheable=true)
-public static List<Account> getBeatAccounts1(Id beatUserId){
- Set<Id> beatIds = new Set<Id>();
- icxdmsv1__Beat_User__c beatFetch=[SELECT icxdmsv1__Beat__c FROM icxdmsv1__Beat_User__c WHERE id=:beatUserId];
-  List<Account> relatedAccounts=new List<Account>();
-    //ID beatId=beatList[0].icxdmsv1__Beat__c;
+
+
+}
+/*@AuraEnabled(cacheable=true)
+public static Map<id,Account> getBeatAccounts(List<icxdmsv1__Beat_User__c> beatList){
+  Set<Id> beatIds = new Set<Id>();
+  List<Account> relatedAccounts1=new List<Account>();
+  Map<id,Account> relatedAccounts=new Map<id,Account>();
+  //  for(Integer i:beatlist.size()){
+    for (icxdmsv1__Beat_User__c beatuser1 :beatList)
+  {
+    beatIds.add(beatuser1.icxdmsv1__Beat__c);
+      system.debug('BeatIds are shown'+beatIds);
+  }
+    
+List<Account> BeatAccounts=[SELECT Name,icxdmsv1__Beat__c FROM Account WHERE icxdmsv1__Beat__c in :beatIds];
+
+  for (Account beatAccount :BeatAccounts)
+  {
+    relatedAccounts.put(beatAccount.icxdmsv1__Beat__c,beatAccount);
+  }
+  
+ 
+
+   // }
+   // ID beatId=beatList[0].icxdmsv1__Beat__c;
     if(Account.sObjectType.getDescribe().isAccessible()){
-
-    relatedAccounts=[SELECT id,Name FROM Account WHERE icxdmsv1__Beat__c = :beatFetch.icxdmsv1__Beat__c];
+//
+    relatedAccounts1=[SELECT id,Name,Type, Industry, BillingAddress,BillingStreet,
+    BillingCity, BillingCountry, BillingPostalCode,
+    BillingState,Phone,icxdmsv1__Beat__c FROM Account WHERE BillingStreet!=NULL AND
+    BillingCity!=NULL AND BillingCountry!=NULL AND  BillingPostalCode!=NULL AND
+    BillingState!=NULL AND icxdmsv1__Beat__c in :beatIds];
     }
+    getAccount(relatedAccounts1);
+    system.debug('Accounts are'+relatedAccounts);
     return relatedAccounts;
-}
-
-}
+}*/
